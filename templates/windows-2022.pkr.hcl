@@ -140,7 +140,7 @@ variable "os" {
 
 variable "winrm_timeout" {
   type    = string
-  default = "40m"
+  default = "2h"
 }
 
 source "proxmox-iso" "windows" {
@@ -170,6 +170,7 @@ source "proxmox-iso" "windows" {
     format       = "${var.vm_disk_format}"
     storage_pool = "${var.proxmox_vm_storage}"
     type         = "sata"
+    cache_mode   = "writeback"
   }
   insecure_skip_tls_verify = "${var.proxmox_skip_tls_verify}"
   iso_file                 = "${var.iso_file}"
@@ -194,7 +195,8 @@ source "proxmox-iso" "windows" {
   winrm_timeout        = "${var.winrm_timeout}"
   winrm_use_ssl        = true
   winrm_username       = "${var.winrm_username}"
-  task_timeout         = "6h"
+  task_timeout         = "40m"
+  unmount_iso          = true
 }
 
 build {
